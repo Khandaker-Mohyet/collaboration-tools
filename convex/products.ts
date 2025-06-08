@@ -9,6 +9,8 @@ export const getProducts = query({
     }
 });
 
+// users, messages, conversations
+
 export const addProduct = mutation({
     args:{
         name: v.string(),
