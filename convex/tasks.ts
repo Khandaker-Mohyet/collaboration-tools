@@ -18,4 +18,22 @@ export const addTask = mutation({
     const taskId = await ctx.db.insert("tasks",{text:args.text,completed:false});
     return taskId
     }
+});
+
+export const completeTask = mutation({
+    args:{
+        id:v.id("tasks")
+    },
+    handler: async (ctx,args) =>{
+        await ctx.db.patch(args.id,{completed: true})
+    }
+});
+
+export const deleteTask = mutation({
+    args:{
+        id:v.id("tasks")
+    },
+    handler: async (ctx, args) =>{
+        await ctx.db.delete(args.id);
+    }
 })
