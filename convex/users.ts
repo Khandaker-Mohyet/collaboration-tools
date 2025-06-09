@@ -70,7 +70,7 @@ export const setUserOffline = internalMutation({
 	},
 });
 
-export const getUsers = query({
+export const getMe = query({
 	args: {},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
@@ -78,7 +78,15 @@ export const getUsers = query({
 			throw new ConvexError("Unauthorized");
 		}
 
-		const users = await ctx.db.query("users").collect();
-		return users.filter((user) => user.tokenIdentifier !== identity.tokenIdentifier);
+		const user = await ctx.db
+			.query("users")
+			.withIndex("by_tokenIdentifier", (q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
+			.unique();
+
+		if (!user) {
+			throw new ConvexError("User not found");
+		}
+
+		return user;
 	},
 });
