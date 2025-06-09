@@ -19,7 +19,6 @@ const LeftPanel = () => {
 					<div className='flex items-center gap-3'>
 						<MessageSquareDiff size={20} /> {/* TODO: This line will be replaced with <UserListDialog /> */}
 						<ThemeSwitch />
-						<LogOut size={20} className='cursor-pointer' />
 					</div>
 				</div>
 				<div className='p-3 flex items-center'>
